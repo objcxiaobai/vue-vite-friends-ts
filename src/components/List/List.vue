@@ -15,9 +15,7 @@
           <span>{{ timeParse(obj.date) }}</span>
           <span class="action__delete">删除</span>
         </div>
-        <div class="action">
-          <span>...</span>
-        </div>
+        <Operation />
       </div>
       <div class="comment">
         <span class="comment__left">作者:</span>
@@ -38,7 +36,7 @@ export default {
 //https://juejin.cn/post/7009282373476941831
 import { defineProps, computed } from "vue";
 import ImageBrowser from "../ImageBrowser/ImageBrowser";
-
+import Operation from "../Operation/Operation.vue";
 const props = defineProps({
   resourObj: {
     type: Object,
@@ -109,14 +107,6 @@ const obj = computed(() => props.resourObj);
           padding-left: 10px;
           color: @primaryColor;
         }
-      }
-      .action {
-        width: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 15px;
-        font-weight: 500;
       }
     }
     .comment {
