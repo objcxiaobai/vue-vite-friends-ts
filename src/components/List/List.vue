@@ -4,29 +4,31 @@
       <img alt=" " :src="obj.authorIcon" />
     </div>
     <div class="list__wrapper">
-     
       <span class="author">{{ obj.name }}</span>
-     
+
       <div class="content__wrapper">
         <span class="content">{{ obj.content }}</span>
-        <image-browser :list="obj.imags" @img-call-back="chooseImages"></image-browser>
+        <image-browser
+          :list="obj.imags"
+          @img-call-back="chooseImages"
+        ></image-browser>
       </div>
-     
+
       <span class="address">{{ obj.address }}</span>
-     
+
       <div class="action__content">
         <div class="date">
           <span>{{ timeParse(obj.date) }}</span>
           <span class="action__delete">删除</span>
         </div>
-        <Operation @operation-callback="chooseOperation"/>
+        <Operation :source="obj" @operation-callback="chooseOperation" />
       </div>
 
       <!-- 组件 -->
       <div class="like__content">
         <i class="czs-heart xb__czs"></i>
         <div class="item__content">
-            <span class="item__person">hhh</span>
+          <span class="item__person">hhh</span>
         </div>
       </div>
       <!-- 组件 -->
@@ -34,7 +36,6 @@
         <span class="comment__left">作者:</span>
         <span class="comment__right">内容</span>
       </div>
-      
     </div>
   </div>
 </template>
@@ -48,28 +49,32 @@ export default {
 
 <script lang="ts" setup>
 //https://juejin.cn/post/7009282373476941831
-import { defineProps, computed } from "vue";
+import { PropType, defineProps, reactive } from "vue";
 import ImageBrowser from "../ImageBrowser/ImageBrowser";
 import Operation from "../Operation/Operation.vue";
-import {OperationType} from '@/interface/index'
+import { ListObjetProps, OperationType } from "@/interface/index";
 const props = defineProps({
   resourObj: {
-    type: Object,
+    type: Object as PropType<ListObjetProps>,
     default: () => {
       return {};
     },
   },
 });
 
-const chooseImages = (item :string) => {
-  console.log(item)
-}
+const chooseImages = (item: string) => {
+  console.log(item);
+};
 
-const chooseOperation = (data: OperationType) =>{
-      console.log(data.type)
-}
+const chooseOperation = (data: OperationType) => {
+  console.log(data);
+  const { type, like } = data;
+  if (type == "good") {
+    obj.isLike = (like && like) || 0
+  }
+};
 
-const obj = computed(() => props.resourObj);
+const obj = reactive(props.resourObj)
 </script>
 
 <style lang="less">
@@ -128,8 +133,8 @@ const obj = computed(() => props.resourObj);
         }
       }
     }
-    .like__content{
-      .xb__czs{
+    .like__content {
+      .xb__czs {
         color: red;
       }
       display: flex;
@@ -137,15 +142,15 @@ const obj = computed(() => props.resourObj);
       padding-bottom: 10px;
       padding-top: 10px;
       align-items: center;
-      
-      .item__content{
+
+      .item__content {
         flex: 1;
         display: flex;
         align-items: center;
         margin-left: 5px;
-        .item__person{
+        .item__person {
           font-size: 13px;
-           color: @primaryColor;
+          color: @primaryColor;
         }
       }
     }

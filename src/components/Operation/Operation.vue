@@ -5,10 +5,17 @@
     </div>
     <div class="action__mask" :class="[isShow ? 'show' : '']">
       <div class="mask_content">
-        <div class="content__item" @click="handleChooseClickItem('good')">
-          <span>点赞</span>
+        <div
+          class="content__item"
+          @click="handleChooseClickItem($event, 'good', objc)"
+        >
+          <span v-if="objc && objc.isLike == 1">取消</span>
+          <span v-else>点赞</span>
         </div>
-        <div class="content__item" @click="handleChooseClickItem('comment')">
+        <div
+          class="content__item"
+          @click="handleChooseClickItem($event, 'comment')"
+        >
           <span>评论</span>
         </div>
       </div>
@@ -17,24 +24,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import {OperationType} from '@/interface/index'
+import { defineComponent, ref, computed, PropType } from "vue";
+import { ListObjetProps, OperationType } from "@/interface/index";
 export default defineComponent({
-  setup(props,{emit}) {
+  props: {
+    source: {
+      type: Object as PropType<ListObjetProps>,
+    },
+  },
+  setup(props, { emit }) {
     const isShow = ref(false);
+    
     const handleClickShow = () => {
       isShow.value = !isShow.value;
     };
-    const handleChooseClickItem = (type: string) => {
-      const data : OperationType = {
-        type
-      }
-      emit("operation-callback",data)
-    }
+
+    const handleChooseClickItem = (
+      event: Event,
+      type: string,
+      objc?: ListObjetProps
+    ) => {
+      console.log(event);
+      const data: OperationType = {
+        type,
+        like: objc && objc.isLike == 0 ? 1 : 0,
+      };
+      emit("operation-callback", data);
+    };
     return {
       isShow,
+      objc:computed(()=> props.source),
       handleClickShow,
-      handleChooseClickItem
+      handleChooseClickItem,
     };
   },
 });

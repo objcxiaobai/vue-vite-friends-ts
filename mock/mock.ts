@@ -21,6 +21,7 @@ const loadingList = () => {
             content:Random.cparagraph(),
             address:Random.city(),
             imags:randomlyGeneratedImage(),
+            isLike:0,
             date:Random.now('yyyy-MM-dd HH:mm:ss')
         }
         result.push(obj)
