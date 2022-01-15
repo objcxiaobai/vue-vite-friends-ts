@@ -4,23 +4,37 @@
       <img alt=" " :src="obj.authorIcon" />
     </div>
     <div class="list__wrapper">
+     
       <span class="author">{{ obj.name }}</span>
+     
       <div class="content__wrapper">
         <span class="content">{{ obj.content }}</span>
         <image-browser :list="obj.imags" @img-call-back="chooseImages"></image-browser>
       </div>
+     
       <span class="address">{{ obj.address }}</span>
+     
       <div class="action__content">
         <div class="date">
           <span>{{ timeParse(obj.date) }}</span>
           <span class="action__delete">删除</span>
         </div>
-        <Operation />
+        <Operation @operation-callback="chooseOperation"/>
       </div>
+
+      <!-- 组件 -->
+      <div class="like__content">
+        <i class="czs-heart xb__czs"></i>
+        <div class="item__content">
+            <span class="item__person">hhh</span>
+        </div>
+      </div>
+      <!-- 组件 -->
       <div class="comment">
         <span class="comment__left">作者:</span>
         <span class="comment__right">内容</span>
       </div>
+      
     </div>
   </div>
 </template>
@@ -37,6 +51,7 @@ export default {
 import { defineProps, computed } from "vue";
 import ImageBrowser from "../ImageBrowser/ImageBrowser";
 import Operation from "../Operation/Operation.vue";
+import {OperationType} from '@/interface/index'
 const props = defineProps({
   resourObj: {
     type: Object,
@@ -48,6 +63,10 @@ const props = defineProps({
 
 const chooseImages = (item :string) => {
   console.log(item)
+}
+
+const chooseOperation = (data: OperationType) =>{
+      console.log(data.type)
 }
 
 const obj = computed(() => props.resourObj);
@@ -106,6 +125,27 @@ const obj = computed(() => props.resourObj);
         .action__delete {
           padding-left: 10px;
           color: @primaryColor;
+        }
+      }
+    }
+    .like__content{
+      .xb__czs{
+        color: red;
+      }
+      display: flex;
+      width: 100%;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      align-items: center;
+      
+      .item__content{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        .item__person{
+          font-size: 13px;
+           color: @primaryColor;
         }
       }
     }

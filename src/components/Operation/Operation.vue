@@ -1,14 +1,14 @@
 <template>
   <div class="action">
     <div class="item" @click="handleClickShow">
-      <span>...</span>
+      <i class="czs-more"></i>
     </div>
     <div class="action__mask" :class="[isShow ? 'show' : '']">
       <div class="mask_content">
-        <div class="content__item">
+        <div class="content__item" @click="handleChooseClickItem('good')">
           <span>点赞</span>
         </div>
-        <div class="content__item">
+        <div class="content__item" @click="handleChooseClickItem('comment')">
           <span>评论</span>
         </div>
       </div>
@@ -18,15 +18,23 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import {OperationType} from '@/interface/index'
 export default defineComponent({
-  setup(props) {
+  setup(props,{emit}) {
     const isShow = ref(false);
     const handleClickShow = () => {
       isShow.value = !isShow.value;
     };
+    const handleChooseClickItem = (type: string) => {
+      const data : OperationType = {
+        type
+      }
+      emit("operation-callback",data)
+    }
     return {
       isShow,
       handleClickShow,
+      handleChooseClickItem
     };
   },
 });
@@ -40,13 +48,10 @@ export default defineComponent({
   position: relative;
   .item {
     height: 100%;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 2;
-    span {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 100%;
-    }
   }
   .action__mask {
     background-color: rgba(0, 0, 0, 0.8);

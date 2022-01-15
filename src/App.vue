@@ -9,6 +9,8 @@ import Home from '@/views/index/index.vue'
 </template>
 
 <style lang="less">
+//http://chuangzaoshi.com/icon/
+@import '@/assets/strawberry/style.css';
 html,body{
   margin: 0;
   padding: 0;
