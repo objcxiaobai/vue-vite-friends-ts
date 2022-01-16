@@ -10,6 +10,7 @@ export interface ListObjetProps{
 }
 
 export interface OperationType{
+    id:number,
     type:string,
     like?:number
 }

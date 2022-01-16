@@ -14,7 +14,7 @@
         </div>
         <div
           class="content__item"
-          @click="handleChooseClickItem($event, 'comment')"
+          @click="handleChooseClickItem($event, 'comment',objc)"
         >
           <span>评论</span>
         </div>
@@ -30,6 +30,9 @@ export default defineComponent({
   props: {
     source: {
       type: Object as PropType<ListObjetProps>,
+      defalut:function(){
+        return {}
+      }
     },
   },
   setup(props, { emit }) {
@@ -42,10 +45,11 @@ export default defineComponent({
     const handleChooseClickItem = (
       event: Event,
       type: string,
-      objc?: ListObjetProps
+      objc: ListObjetProps
     ) => {
       console.log(event);
       const data: OperationType = {
+        id: objc && objc.id,
         type,
         like: objc && objc.isLike == 0 ? 1 : 0,
       };

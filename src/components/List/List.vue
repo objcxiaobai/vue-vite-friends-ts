@@ -1,27 +1,27 @@
 <template>
-  <div class="list__container">
+  <div class="list__container" v-for="item in list" :key="item.id">
     <div class="list__icon">
-      <img alt=" " :src="obj.authorIcon" />
+      <img alt=" " :src="item.authorIcon" />
     </div>
     <div class="list__wrapper">
-      <span class="author">{{ obj.name }}</span>
+      <span class="author">{{ item.name }}</span>
 
       <div class="content__wrapper">
-        <span class="content">{{ obj.content }}</span>
+        <span class="content">{{ item.content }}</span>
         <image-browser
-          :list="obj.imags"
+          :list="item.imags"
           @img-call-back="chooseImages"
         ></image-browser>
       </div>
 
-      <span class="address">{{ obj.address }}</span>
+      <span class="address">{{ item.address }}</span>
 
       <div class="action__content">
         <div class="date">
-          <span>{{ timeParse(obj.date) }}</span>
+          <span>{{ timeParse(item.date) }}</span>
           <span class="action__delete">删除</span>
         </div>
-        <Operation :source="obj" @operation-callback="chooseOperation" />
+        <Operation :source="item" @operation-callback="chooseOperation" />
       </div>
 
       <!-- 组件 -->
@@ -49,15 +49,16 @@ export default {
 
 <script lang="ts" setup>
 //https://juejin.cn/post/7009282373476941831
-import { PropType, defineProps, reactive } from "vue";
+import { PropType, defineProps, reactive, computed } from "vue";
 import ImageBrowser from "../ImageBrowser/ImageBrowser";
 import Operation from "../Operation/Operation.vue";
 import { ListObjetProps, OperationType } from "@/interface/index";
+
 const props = defineProps({
-  resourObj: {
-    type: Object as PropType<ListObjetProps>,
-    default: () => {
-      return {};
+  dataList: {
+    type: Array as PropType<ListObjetProps[]>,
+    default: function () {
+      return [];
     },
   },
 });
@@ -68,13 +69,16 @@ const chooseImages = (item: string) => {
 
 const chooseOperation = (data: OperationType) => {
   console.log(data);
-  const { type, like } = data;
+  const { type, id, like } = data;
   if (type == "good") {
-    obj.isLike = (like && like) || 0
+    let index = props.dataList?.findIndex((item) => item.id == id);
+    if (index != -1) {
+      props.dataList[index].isLike = like || 0;
+    }
   }
 };
 
-const obj = reactive(props.resourObj)
+const list = computed(() => props.dataList);
 </script>
 
 <style lang="less">

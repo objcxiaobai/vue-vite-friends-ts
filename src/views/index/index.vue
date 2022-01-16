@@ -1,10 +1,6 @@
 <template>
     <nav-bar></nav-bar>
-
-    <template v-for="item in data.list" :key="item.id">
-        <list :resourObj="item" />
-    </template>
-    
+    <list :data-list="data.propslist" />    
 </template>
 
 <script lang="ts" setup>
@@ -12,13 +8,15 @@ import NavBar from '@/components/NavBar/NavBar.tsx';
 import List from '@/components/List/List.vue';
 import { onMounted ,reactive} from 'vue';
 import {getList} from "@/model/index"
+import { ListObjetProps} from "@/interface/index";
 
-const data = reactive({list:[]})
+const propslist :ListObjetProps[] = []
+const data = reactive({propslist})
 
 onMounted(async ()=>{
     const res  =  await getList()
-    console.log(res)
-    data.list = res as any
+    data.propslist = res as any
+    console.log(data.propslist)
 })
 
 </script>
