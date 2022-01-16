@@ -14,7 +14,7 @@
         </div>
         <div
           class="content__item"
-          @click="handleChooseClickItem($event, 'comment',objc)"
+          @click="handleChooseClickItem($event, 'comment', objc)"
         >
           <span>评论</span>
         </div>
@@ -24,20 +24,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType } from "vue";
+import { defineComponent, ref, computed, PropType, reactive } from "vue";
 import { ListObjetProps, OperationType } from "@/interface/index";
 export default defineComponent({
   props: {
     source: {
       type: Object as PropType<ListObjetProps>,
-      defalut:function(){
-        return {}
-      }
+      default: function () {
+        return {};
+      },
     },
   },
-  setup(props, { emit }) {
+  setup(props: any, { emit }) {
     const isShow = ref(false);
-    
+
     const handleClickShow = () => {
       isShow.value = !isShow.value;
     };
@@ -57,7 +57,7 @@ export default defineComponent({
     };
     return {
       isShow,
-      objc:computed(()=> props.source),
+      objc: computed((): ListObjetProps => props.source),
       handleClickShow,
       handleChooseClickItem,
     };
