@@ -15,7 +15,7 @@ const data = reactive({propslist})
 
 onMounted(async ()=>{
     const res  =  await getList()
-    data.propslist = res as any
+    data.propslist = res
     console.log(data.propslist)
 })
 
