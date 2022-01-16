@@ -10,8 +10,13 @@ import { onMounted ,reactive} from 'vue';
 import {getList} from "@/model/index"
 import { ListObjetProps} from "@/interface/index";
 
-const propslist :ListObjetProps[] = []
-const data = reactive({propslist})
+interface HomePropType{
+    propslist:ListObjetProps[]
+}
+//可以声明类型
+const data:HomePropType = reactive({
+    propslist:[]
+})
 
 onMounted(async ()=>{
     const res  =  await getList()
