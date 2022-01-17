@@ -4,6 +4,7 @@ const service = axios.create({
 })
 service.interceptors.response.use(
   response => {
+    console.log('success==', response)
     const res = response.data
     return res.data
   },
