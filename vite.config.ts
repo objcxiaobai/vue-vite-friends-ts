@@ -13,12 +13,12 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [vue(), vueJsx(), viteMockServe({
-      mockPath: './mock',
+      mockPath: 'mock',
       localEnabled: env.VITE_APP_COMMAND === 'serve',
       prodEnabled: env.VITE_APP_COMMAND !== 'serve' && env.VITE_APP_COMMAND === 'build',
       //  这样可以控制关闭mock的时候不让mock打包到最终代码内
       injectCode: `
-      import { setupProdMockServer } from './mockProdServer';
+      import { setupProdMockServer } from '../mock/mockProdServer';
       setupProdMockServer();
     `,
     })],
