@@ -1,10 +1,18 @@
 import { createProdMockServer } from 'vite-plugin-mock/es/createProdMockServer'
-// 逐一导入您的mock.ts文件
-// 如果使用vite.mock.config.ts，只需直接导入文件
-// 可以使用 import.meta.glob功能来进行全部导入
-import testModule from './mock'
 
+
+//https://juejin.cn/post/7032926228055556126
+// const modules = import.meta.glob('./**/*.ts')
+// const mockModules: any[] = [];
+// Object.keys(modules).forEach((key) => {
+//   if (key.includes('/_')) {
+//     return;
+//   }
+//   mockModules.push(...modules[key].default);
+// });
+
+import mockModules from './mock'
 
 export function setupProdMockServer() {
-    createProdMockServer([testModule])
+    createProdMockServer([...mockModules])
 }
