@@ -17,7 +17,6 @@ interface HomePropType{
 const data:HomePropType = reactive({
     propslist:[]
 })
-
 onMounted(async ()=>{
     const res  =  await getList()
     data.propslist = res

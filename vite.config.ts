@@ -7,10 +7,10 @@ const path = require('path');
 
 
 // https://vitejs.dev/config/
+//https://blog.csdn.net/weixin_47605601/article/details/117388511
 export default ({ mode }) => {
   //根据环境
   const env = loadEnv(mode, process.cwd());
-
   return defineConfig({
     plugins: [vue(), vueJsx(), viteMockServe({
       mockPath: 'mock',

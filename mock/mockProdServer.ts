@@ -6,5 +6,5 @@ import testModule from './mock'
 
 
 export function setupProdMockServer() {
-    createProdMockServer([...testModule])
+    createProdMockServer([testModule])
 }
