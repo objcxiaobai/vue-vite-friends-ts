@@ -19,3 +19,15 @@ declare module '*.tsx' {
   
   export default componentOptions
 }
+
+
+
+interface ImportMetaEnv {
+  readonly VITE_APP_EV: boolean
+  readonly VITE_APP_COMMAND: string
+  // 更多环境变量...
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
